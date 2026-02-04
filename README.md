@@ -1,2 +1,40 @@
-# UniteTools
-Unite Tools is a website use to improve is knowledge and some skills about the Pokémon Unite game. This include a Draft Simulator, a tierlist creator, a map timing gestion and a damage calculator.
+# Unite Tools by Alexis Arduca
+
+---
+
+## Features
+
+This website, Unite Tools, as many use:
+- Pokemon Unite Draft Simulator [WIP]
+- Pokemon Unite Tierlist Creator [WIP]
+- Pokemon Unite Map Timing [WIP]
+- Pokemon Unite Damage Calcultator [WIP]
+
+## About
+
+This website was created by a player, for players, with the goal of helping anyone who wants to practice and improve their differents skills in Pokémon Unite.
+
+Built with HTML/CSS and enhanced with a custom JavaScript script, the site is hosted on GitHub Pages.
+
+This is a personal passion project, maintained for fun, but it will be kept up to date with the latest additions and balance changes in Pokémon Unite — covering both casual and competitive formats.
+
+Supported languages: French, English, German, Spanish, Italian
+
+---
+
+## Disclaimer
+
+This project is a fan-made, non-commercial tool created solely for the community.
+
+- Pokémon Unite is developed by TiMi Studio Group and published by The Pokémon Company, Tencent Games, and Nintendo.
+- Pokémon and all related names, images, and assets are trademarks of Nintendo, Creatures Inc., and Game Freak Inc.
+- This project is not affiliated with, endorsed, or sponsored by Nintendo, The Pokémon Company, Tencent, or any of their partners.
+
+All rights to Pokémon and Pokémon Unite belong to their respective owners.
+
+---
+
+## Contact
+
+- Discord: fizzeys.
+- Twitter: @FizzeyS.
