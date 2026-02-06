@@ -1,0 +1,195 @@
+:root {
+  --bg-dark: #0d1117;
+  --panel-dark: #161b22;
+  --text-light: #c9d1d9;
+  --text-white: #ffffff;
+  --violet: #bb86fc;
+  --violet-glow: rgba(187, 134, 252, 0.5);
+  --orange: #ff9d00;
+  --orange-glow: rgba(255, 157, 0, 0.5);
+  --blue: #58a6ff;
+  --blue-glow: rgba(88, 166, 255, 0.5);
+  --green: #3fb950;
+  --green-glow: rgba(63, 185, 80, 0.5);
+  --yellow: #f1c40f;
+  --card-bg: rgba(22, 27, 34, 0.8);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(to bottom, #0a0e13, var(--bg-dark));
+  color: var(--text-light);
+  min-height: 100vh;
+  padding: 2rem;
+  margin-left: 250px;
+  transition: margin-left 0.3s ease;
+}
+
+.hero {
+  text-align: center;
+  padding: 6rem 2rem 5rem;
+  margin-bottom: 4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at center, rgba(187, 134, 252, 0.15), transparent 70%);
+  pointer-events: none;
+  animation: pulse-glow 8s infinite alternate;
+}
+
+@keyframes pulse-glow {
+  0% { opacity: 0.4; }
+  100% { opacity: 0.7; }
+}
+
+.hero h1 {
+  font-size: 4.5rem;
+  background: linear-gradient(90deg, #7ef0ff, #bb86fc, #ffd27a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 30px var(--violet-glow);
+  margin-bottom: 1.5rem;
+  animation: title-pulse 6s infinite alternate;
+}
+
+@keyframes title-pulse {
+  0% { text-shadow: 0 0 30px var(--violet-glow); }
+  100% { text-shadow: 0 0 50px var(--violet-glow), 0 0 70px rgba(187, 134, 252, 0.3); }
+}
+
+.hero-subtitle {
+  font-size: 1.8rem;
+  color: var(--yellow);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.hero-desc {
+  font-size: 1.4rem;
+  max-width: 900px;
+  margin: 0 auto;
+  opacity: 0.9;
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 3rem;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.tool-card {
+  background: var(--panel-dark);
+  border-radius: 24px;
+  padding: 2.5rem;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.7);
+  transition: all 0.5s ease;
+  text-align: center;
+  border: 3px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.tool-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: 24px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.03), transparent);
+  pointer-events: none;
+}
+
+.tool-card:hover {
+  transform: translateY(-15px);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.8);
+}
+
+.card-image-wrapper {
+  overflow: hidden;
+  border-radius: 20px;
+  margin-bottom: 1.8rem;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+}
+
+.tool-card img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.tool-card:hover img {
+  transform: scale(1.08);
+}
+
+.tool-card.draft {
+  border-color: var(--violet);
+  box-shadow: 0 0 35px var(--violet-glow);
+}
+
+.tool-card.map {
+  border-color: var(--blue);
+  box-shadow: 0 0 35px var(--blue-glow);
+}
+
+.tool-card.calc {
+  border-color: var(--orange);
+  box-shadow: 0 0 35px var(--orange-glow);
+}
+
+.tool-card.tierlist {
+  border-color: var(--green);
+  box-shadow: 0 0 35px var(--green-glow);
+}
+
+.tool-card h2 {
+  font-size: 2.4rem;
+  color: var(--text-white);
+  margin-bottom: 1.2rem;
+  text-shadow: 0 0 12px currentColor;
+}
+
+.tool-card p {
+  font-size: 1.15rem;
+  margin-bottom: 2.5rem;
+  opacity: 0.9;
+  line-height: 1.6;
+}
+
+.tool-btn {
+  padding: 14px 36px;
+  background: var(--yellow);
+  color: #000;
+  border: none;
+  border-radius: 14px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: inline-block;
+  box-shadow: 0 6px 15px rgba(241,196,15,0.4);
+}
+
+.tool-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 25px rgba(241,196,15,0.7);
+  background: #ffd700;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero h1 { font-size: 3.5rem; }
+  .hero-subtitle { font-size: 1.5rem; }
+  .tools-grid { gap: 2rem; }
+  .tool-card img { height: 220px; }
+}

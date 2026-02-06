@@ -1,0 +1,118 @@
+let translations = {};
+let currentLang = localStorage.getItem('lang') || 'fr';
+
+document.addEventListener("DOMContentLoaded", () => {
+  const isLocal = ["localhost", "127.0.0.1", "0.0.0.0"].includes(window.location.hostname);
+  const basePath = isLocal ? "./" : "/UniteTools/";
+  
+  const navbarPath = `${basePath}components/navbar.html`;
+
+  fetch(navbarPath)
+    .then(response => {
+      if (!response.ok) throw new Error("Erreur de chargement de la navbar");
+      return response.text();
+    })
+    .then(data => {
+      document.getElementById("navbar-container").innerHTML = data;
+      initNavbar(basePath);
+    })
+    .catch(err => console.error("Erreur navbar:", err));
+});
+
+function initNavbar(basePath) {
+  const toggle = document.getElementById("toggle-sidebar");
+  const sidebar = document.getElementById("sidebar");
+  const header = document.querySelector(".sidebar-header");
+
+  if (toggle && sidebar) {
+    toggle.addEventListener("click", () => {
+      sidebar.classList.toggle("active");
+    });
+  }
+
+  if (header) {
+    header.style.cursor = "pointer";
+    header.addEventListener("click", () => {
+      window.location.href = basePath;
+    });
+  }
+
+  document.querySelectorAll("#sidebar a").forEach(link => {
+    const href = link.getAttribute("href");
+    if (href && (href.startsWith("/") || href.startsWith("../"))) {
+      const cleanPath = href.replace(/^\/?UniteTools\/?/, "");
+      link.href = basePath + cleanPath;
+    }
+  });
+
+  document.querySelectorAll("#sidebar img").forEach(img => {
+    const src = img.getAttribute("src");
+    if (src && src.startsWith("/UniteTools")) {
+      img.src = basePath + src.replace(/^\/?UniteTools\/?/, "");
+    }
+  });
+
+  loadAllTranslations(basePath);
+
+  document.body.addEventListener("click", e => {
+    const btn = e.target.closest(".lang-btn");
+    if (btn && btn.dataset.lang) {
+      const newLang = btn.dataset.lang;
+      if (newLang !== currentLang) {
+        currentLang = newLang;
+        localStorage.setItem("lang", currentLang);
+        applyTranslations();
+      }
+    }
+  });
+
+  function normalizePath(url) {
+    try {
+      const path = new URL(url, window.location.origin).pathname;
+      return path.replace(/index\.html$/, "").replace(/\/$/, "") || "/";
+    } catch {
+      return "/";
+    }
+  }
+
+  const currentNormalized = normalizePath(window.location.href);
+
+  document.querySelectorAll("#sidebar a").forEach(link => {
+    if (normalizePath(link.href) === currentNormalized) {
+      link.classList.add("active");
+    }
+  });
+}
+
+function loadAllTranslations(basePath) {
+  const frPath = `${basePath}lang/fr.json`;
+  const enPath = `${basePath}lang/en.json`;
+
+  Promise.all([
+    fetch(frPath).then(res => { if (!res.ok) throw new Error("FR non trouvé"); return res.json(); }),
+    fetch(enPath).then(res => { if (!res.ok) throw new Error("EN non trouvé"); return res.json(); })
+  ])
+  .then(([fr, en]) => {
+    translations.fr = fr;
+    translations.en = en;
+    applyTranslations();
+  })
+  .catch(err => console.error("Erreur chargement traductions:", err));
+}
+
+function applyTranslations() {
+  document.querySelectorAll('[data-lang]').forEach(el => {
+    const key = el.dataset.lang;
+    if (translations[currentLang] && translations[currentLang][key]) {
+      el.textContent = translations[currentLang][key];
+    }
+  });
+
+  if (translations[currentLang] && translations[currentLang].page_title) {
+    document.title = translations[currentLang].page_title;
+  }
+
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === currentLang);
+  });
+}
