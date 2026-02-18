@@ -70,9 +70,9 @@ export function createRecapSlots(originalSlots, isBan = false) {
 
     const oldImg = oldSlot.querySelector("img");
     if (oldImg) {
-      const img      = document.createElement("img");
-      img.src         = oldImg.src;
-      img.alt         = oldImg.alt;
+      const img = document.createElement("img");
+      img.src = oldImg.src;
+      img.alt = oldImg.alt;
       img.style.cssText = "width:100%;height:100%;border-radius:6px;object-fit:cover;";
       if (isBan) img.style.opacity = "0.6";
       newSlot.appendChild(img);

@@ -19,9 +19,9 @@ export function startDraft() {
   document.getElementById("map-display").style.display   = "block";
   document.getElementById("map-selection").style.display = "none";
 
-  state.fearlessMode      = document.getElementById("fearless-checkbox").checked;
+  state.fearlessMode = document.getElementById("fearless-checkbox").checked;
   state.currentDraftOrder = [...draftOrders[state.selectedMode]];
-  state.currentStep       = 0;
+  state.currentStep = 0;
 
   document.getElementById("start-draft").style.display  = "none";
   document.getElementById("reset-draft").style.display  = "inline-block";
@@ -41,8 +41,8 @@ export function startDraft() {
 export function endDraft() {
   clearInterval(state.timerInterval);
   document.querySelectorAll(".slot").forEach(s => s.classList.remove("current-pick"));
-  document.getElementById("filters").style.display      = "none";
-  document.getElementById("gallery").style.display      = "none";
+  document.getElementById("filters").style.display = "none";
+  document.getElementById("gallery").style.display = "none";
   document.getElementById("sort-options").style.display = "none";
   updateTurn();
 
@@ -112,15 +112,15 @@ export function undoLastPick() {
   if (state.currentStep <= 0) return;
 
   const lastIndex = state.currentStep - 1;
-  const step      = state.currentDraftOrder[lastIndex];
-  const teamElem  = document.getElementById(step.team);
-  const slots     = Array.from(teamElem.querySelectorAll(`.slots.${step.type}s .slot`));
-  const lastSlot  = slots.reverse().find(s => s.querySelector("img"));
+  const step = state.currentDraftOrder[lastIndex];
+  const teamElem = document.getElementById(step.team);
+  const slots = Array.from(teamElem.querySelectorAll(`.slots.${step.type}s .slot`));
+  const lastSlot = slots.reverse().find(s => s.querySelector("img"));
   if (!lastSlot) return;
 
   const img = lastSlot.querySelector("img");
   if (img) {
-    const monFile    = img.dataset.file;
+    const monFile = img.dataset.file;
     const galleryImg = state.allImages.find(g => g.dataset.file === monFile);
     if (galleryImg) galleryImg.classList.remove("used");
 
