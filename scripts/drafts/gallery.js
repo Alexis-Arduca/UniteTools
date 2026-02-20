@@ -13,7 +13,7 @@ function applyFiltersAndSearch() {
 
     if (currentRole !== null) {
       const roleMatch = currentRole === "unknown"
-        ? true
+        ? !["def", "atk", "sup", "spe", "all"].includes(img.dataset.role)
         : img.dataset.role === currentRole;
       visible = roleMatch;
     }
@@ -103,11 +103,11 @@ export function initFilters() {
 
       if (btn.classList.contains("active")) {
         btn.classList.remove("active");
-        currentRole = null;
+        currentRole = role === "unknown" ? null : role;
       } else {
         document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
-        currentRole = role;
+        currentRole = role === "unknown" ? null : role;
       }
 
       applyFiltersAndSearch();
