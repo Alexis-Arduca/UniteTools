@@ -3,8 +3,8 @@ let currentLang = localStorage.getItem('lang') || 'fr';
 
 document.addEventListener("DOMContentLoaded", () => {
   const isLocal = ["localhost", "127.0.0.1", "0.0.0.0"].includes(window.location.hostname);
-  const basePath = isLocal ? "./" : "/UniteTools/";
-  
+  const basePath = isLocal ? "./" : "/PokemonUniteDraft/";
+
   const navbarPath = `${basePath}components/navbar.html`;
 
   fetch(navbarPath)
@@ -23,10 +23,34 @@ function initNavbar(basePath) {
   const toggle = document.getElementById("toggle-sidebar");
   const sidebar = document.getElementById("sidebar");
   const header = document.querySelector(".sidebar-header");
+  const hideBtn = document.getElementById("hide-sidebar-btn");
+
+  function syncSidebarState(hidden) {
+    sidebar.classList.toggle("hidden", hidden);
+    document.body.classList.toggle("sidebar-collapsed", hidden);
+    if (toggle) toggle.classList.toggle("sidebar-hidden", hidden);
+    if (hideBtn) hideBtn.textContent = hidden ? "▶" : "◀";
+    localStorage.setItem("sidebarHidden", hidden);
+  }
+
+  const isHidden = localStorage.getItem("sidebarHidden") === "true";
+  syncSidebarState(isHidden);
+
+  if (hideBtn && sidebar) {
+    hideBtn.addEventListener("click", () => {
+      const nowHidden = !sidebar.classList.contains("hidden");
+      syncSidebarState(nowHidden);
+    });
+  }
 
   if (toggle && sidebar) {
     toggle.addEventListener("click", () => {
-      sidebar.classList.toggle("active");
+      const isMobile = window.innerWidth <= 768;
+      if (isMobile) {
+        sidebar.classList.toggle("active");
+      } else {
+        syncSidebarState(false);
+      }
     });
   }
 
@@ -76,7 +100,6 @@ function initNavbar(basePath) {
   }
 
   const currentNormalized = normalizePath(window.location.href);
-
   document.querySelectorAll("#sidebar a").forEach(link => {
     if (normalizePath(link.href) === currentNormalized) {
       link.classList.add("active");
